@@ -15,7 +15,10 @@ pub fn init_test_subscriber() {
     // Here we are using the `Layer` trait from the `tracing-subscriber` crate to combine together
     // multiple pieces of functionality into a single subscriber.
     // We'll talk more about layers later in the workshop.
-    Registry::default().with(otel).init()
+    Registry::default()
+        // .with(tracing_subscriber::fmt::layer().with_span_events(FmtSpan::NEW| FmtSpan::EXIT))
+        .with(otel)
+        .init()
 }
 
 pub fn init_tracer() -> Tracer {
@@ -47,5 +50,4 @@ pub fn init_tracer() -> Tracer {
         )
         .install_batch(runtime::Tokio)
         .unwrap()
-        .tracer("rust-telemetry-workshop")
 }
